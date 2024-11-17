@@ -63,11 +63,12 @@ class GUI:
     def process_video(self, button_pressed="test"):
 
         video_path = self.entry_path.get()
+        speed = self.speed_var.get()
 
         if (fps := self.fetch_value("FPS", self.entry_fps, int, "stats")) == "reset_value": return
         if (width := self.fetch_value("Width", self.entry_width, int, "stats")) == "reset_value": return
         if (height := self.fetch_value("Height", self.entry_height, int, "stats")) == "reset_value": return
-        if (speed := self.fetch_value("Speed", self.speed_var, float, "stats")) == "reset_value": return
+        # if (speed := self.fetch_value("Speed", self.speed_var, float, "stats")) == "reset_value": return
         if (start_time := self.fetch_value("Start Time", self.start_time, int, "start_time")) == "reset_value": return
         if (label_duration := self.fetch_value("Video duration", self.label_duration, int, "label_duration")) == "reset_value": return
 
