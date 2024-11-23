@@ -20,7 +20,7 @@ class VideoProcessor:
         date_time = datetime.now().strftime("%d%m%Y_%H%M%S")
         output_name = f"{input_name[0]}_{date_time}"
         print(output_name)
-        cmd = f'ffmpeg -i {self.metadata["input"]} -y '
+        cmd = f'ffmpeg -i "{self.metadata["input"]}" -y '
 
         if self.metadata["start_time"] != -1:
             h, m, s = self.convert_seconds(int(self.metadata["start_time"]))
