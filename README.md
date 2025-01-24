@@ -30,6 +30,6 @@ This project processes video files using FFmpeg. It allows the user to input vid
 
 The GUI should now open, and you can start processing videos!
 
-<img width="616" alt="Screenshot 2025-01-23 at 7 04 11 PM" src="https://github.com/user-attachments/assets/a62a3194-020a-4c2f-803a-37d5eae70dbe" />
+<img width="609" alt="Screenshot 2025-01-23 at 7 05 44 PM" src="https://github.com/user-attachments/assets/084f73e1-1bee-4b62-945e-57c3a32b90d1" />
 
 
