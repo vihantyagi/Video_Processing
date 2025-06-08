@@ -55,5 +55,6 @@ The super-resolution model requires pre-trained weights. Place the model weights
 - `ESRT_x3.pth` for 3x upscaling
 - `ESRT_x4.pth` for 4x upscaling
 
-<img width="627" alt="Screenshot 2025-06-08 at 12 29 52 AM" src="https://github.com/user-attachments/assets/952d7576-97a8-4195-998f-51a4629e1452" />
+![9F1AE3D6-AAAF-4F39-A763-CF2954B580B3_1_201_a](https://github.com/user-attachments/assets/45367332-ce35-4ece-9f1d-fa61e45890a6)
+
 
