@@ -13,6 +13,7 @@ class GUI:
         self.entry_width = None
         self.entry_height = None
         self.speed_var = None
+        self.sr_var = None
         self.start_time = None
         self.label_duration = None
         self.final_processing = None
@@ -64,20 +65,20 @@ class GUI:
 
         video_path = self.entry_path.get()
         speed = self.speed_var.get()
+        sr_factor = self.sr_var.get()
 
         if (fps := self.fetch_value("FPS", self.entry_fps, int, "stats")) == "reset_value": return
         if (width := self.fetch_value("Width", self.entry_width, int, "stats")) == "reset_value": return
         if (height := self.fetch_value("Height", self.entry_height, int, "stats")) == "reset_value": return
-        # if (speed := self.fetch_value("Speed", self.speed_var, float, "stats")) == "reset_value": return
         if (start_time := self.fetch_value("Start Time", self.start_time, int, "start_time")) == "reset_value": return
         if (label_duration := self.fetch_value("Video duration", self.label_duration, int, "label_duration")) == "reset_value": return
 
-        if fps == -1 and width == -1 and height == -1 and speed == -1 and start_time == -1 and label_duration == -1 and button_pressed=="process": 
+        if fps == -1 and width == -1 and height == -1 and speed == -1 and start_time == -1 and label_duration == -1 and sr_factor == "no change" and button_pressed=="process": 
             text = f"Since no parameter is being changed the software will simply perform standard compression"
             messagebox.showinfo("Please Note", text)
 
-        print(video_path, start_time, label_duration, fps, width, height, speed)
-        self.final_processing = (video_path, start_time, label_duration, fps, width, height, speed)
+        print(video_path, start_time, label_duration, fps, width, height, speed, sr_factor)
+        self.final_processing = (video_path, start_time, label_duration, fps, width, height, speed, sr_factor)
 
         if self.callback:
             a = self.callback(self.final_processing)
@@ -228,25 +229,34 @@ class GUI:
         dropdown_speed = ttk.Combobox(self.root, textvariable=self.speed_var, values=speed_options, state="readonly")
         dropdown_speed.grid(row=6, column=1, sticky="w", padx=10, pady=5)
 
-         # Bind focus-out event to validate entries
+        # Row 7: Super Resolution Dropdown
+        label_sr = tk.Label(self.root, text="Super Resolution:")
+        label_sr.grid(row=7, column=0, padx=10, pady=5)
+        self.sr_var = tk.StringVar(self.root)
+        sr_options = ["no change", "x2", "x3", "x4"]
+        self.sr_var.set("no change")
+        dropdown_sr = ttk.Combobox(self.root, textvariable=self.sr_var, values=sr_options, state="readonly")
+        dropdown_sr.grid(row=7, column=1, sticky="w", padx=10, pady=5)
+
+        # Bind focus-out event to validate entries
         self.entry_fps.bind("<FocusOut>", lambda event: self.on_validate(self.entry_fps, "stats"))
         self.entry_width.bind("<FocusOut>", lambda event: self.on_validate(self.entry_width, "stats"))
         self.entry_height.bind("<FocusOut>", lambda event: self.on_validate(self.entry_height, "stats"))
         self.start_time.bind("<FocusOut>", lambda event: self.on_validate(self.start_time, "start_time"))
         self.label_duration.bind("<FocusOut>", lambda event: self.on_validate(self.label_duration, "label_duration"))
 
-        # Row 7: Buttons - Compress, Process, and Get Info
+        # Row 8: Buttons - Compress, Process, and Get Info
         button_new = tk.Button(self.root, text="Compress Video", command=lambda: self.start_task("compress"))  
-        button_new.grid(row=7, column=1, pady=20, sticky="w") 
+        button_new.grid(row=8, column=1, pady=20, sticky="w") 
 
         button_process = tk.Button(self.root, text="Process Video", command=lambda: self.start_task("process"))
-        button_process.grid(row=7, column=1, pady=20) 
+        button_process.grid(row=8, column=1, pady=20) 
 
         button_info = tk.Button(self.root, text="Get Info", command=self.get_info)
-        button_info.grid(row=7, column=0, pady=20, sticky="")  
+        button_info.grid(row=8, column=0, pady=20, sticky="")  
 
         self.spinner_label = tk.Label(self.root, text="😴")
-        self.spinner_label.grid(row=7, column=2, pady=10)
+        self.spinner_label.grid(row=8, column=2, pady=10)
 
         # Run the application
         self.root.mainloop()
