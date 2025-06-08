@@ -50,42 +50,42 @@ class VideoProcessor:
             self.metadata["input"] = sr_output
             output_name = f"{output_name}_processed"
 
-        # print(output_name)
-        # cmd = f'ffmpeg -i "{self.metadata["input"]}" -y '
+        print(output_name)
+        cmd = f'ffmpeg -i "{self.metadata["input"]}" -y '
 
-        # if self.metadata["start_time"] != -1:
-        #     h, m, s = self.convert_seconds(int(self.metadata["start_time"]))
-        #     cmd += f'-ss {h}:{m}:{s} '            
-        # if self.metadata["duration"] != -1:
-        #     cmd += f'-t {self.metadata["duration"]} ' 
-        # if self.metadata["fps"] != -1:
-        #     open_quotes = 1
-        #     cmd += f'-vf "fps={self.metadata["fps"]} '
-        # if self.metadata["width"] != -1 or self.metadata["height"] != -1:
-        #     if open_quotes:
-        #         cmd += f', scale={self.metadata["width"]}:{self.metadata["height"]} '
-        #     else:
-        #         open_quotes = 1 
-        #         cmd += f'-vf "scale={self.metadata["width"]}:{self.metadata["height"]} '
-        # if self.metadata["speed"] != -1 and self.metadata["speed"] != "no change":
-        #     if open_quotes:
-        #         cmd += f', setpts={round(1/float(self.metadata["speed"]), 1)}*PTS" -filter:a "atempo={self.metadata["speed"]}"'
-        #     else:
-        #         cmd += f'-vf "setpts={round(1/float(self.metadata["speed"]), 1)}*PTS" -filter:a "atempo={self.metadata["speed"]}"' 
-        #     close_quotes = 1
+        if self.metadata["start_time"] != -1:
+            h, m, s = self.convert_seconds(int(self.metadata["start_time"]))
+            cmd += f'-ss {h}:{m}:{s} '            
+        if self.metadata["duration"] != -1:
+            cmd += f'-t {self.metadata["duration"]} ' 
+        if self.metadata["fps"] != -1:
+            open_quotes = 1
+            cmd += f'-vf "fps={self.metadata["fps"]} '
+        if self.metadata["width"] != -1 or self.metadata["height"] != -1:
+            if open_quotes:
+                cmd += f', scale={self.metadata["width"]}:{self.metadata["height"]} '
+            else:
+                open_quotes = 1 
+                cmd += f'-vf "scale={self.metadata["width"]}:{self.metadata["height"]} '
+        if self.metadata["speed"] != -1 and self.metadata["speed"] != "no change":
+            if open_quotes:
+                cmd += f', setpts={round(1/float(self.metadata["speed"]), 1)}*PTS" -filter:a "atempo={self.metadata["speed"]}"'
+            else:
+                cmd += f'-vf "setpts={round(1/float(self.metadata["speed"]), 1)}*PTS" -filter:a "atempo={self.metadata["speed"]}"' 
+            close_quotes = 1
         
-        # if open_quotes and not close_quotes:  
-        #     cmd += f'\" {output_name}.mp4'
-        # else:
-        #     cmd += f' {output_name}.mp4'
+        if open_quotes and not close_quotes:  
+            cmd += f'\" {output_name}.mp4'
+        else:
+            cmd += f' {output_name}.mp4'
         
-        # print(f"processing video {cmd}")
+        print(f"processing video {cmd}")
     
-        # p = subprocess.Popen(cmd, stdout=subprocess.PIPE, shell=True)
-        # p.wait()
+        p = subprocess.Popen(cmd, stdout=subprocess.PIPE, shell=True)
+        p.wait()
 
-        # # Clean up temporary super-resolved video if it exists
-        # if self.sr_processor and os.path.exists(sr_output):
-        #     os.remove(sr_output)
+        # Clean up temporary super-resolved video if it exists
+        if self.sr_processor and os.path.exists(sr_output):
+            os.remove(sr_output)
 
         return "video processed complete"
